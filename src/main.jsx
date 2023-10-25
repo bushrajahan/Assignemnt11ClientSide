@@ -55,7 +55,6 @@ const router = createBrowserRouter([
       },
       {
         path:'/product/:bandName',
-        element:<ShowProduct></ShowProduct>,
     
       }
     ]
