@@ -51,10 +51,9 @@ const router = createBrowserRouter([
       {
         path:'/users/:brandName',
         element:<BrandPages></BrandPages>,
-        loader:({brandName})=>fetch(`http://localhost:5000/users/:${brandName}`)
       },
       {
-        path:'/product/:brandName',
+        path:'/product/:bandName',
         element:<ShowProduct></ShowProduct>,
     
       }
