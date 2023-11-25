@@ -13,8 +13,7 @@ const Privateroute = ({ children }) => {
 
   if (!user) {
     // Redirect the user to the login page if not authenticated
-    navigate('/login');
-    return null;
+    return <Login></Login>
   }
 
   // Render the children (the protected content) if the user is authenticated

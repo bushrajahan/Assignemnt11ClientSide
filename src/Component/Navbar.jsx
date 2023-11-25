@@ -8,14 +8,27 @@ import Profile from './Profile';
 
 function Navbar() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false); 
   const { user } = useContext(AuthContext);
+  console.log(user)
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
 
+    const body = document.body;
+    if (isDarkMode) {
+      body.style.backgroundColor = 'white';
+      body.style.color = 'black';
+    } else {
+      body.style.backgroundColor = 'black';
+      body.style.color = 'white';
+    }
+  };
   const navitems = () => (
     <>
       <NavLink
         to="/"
         className={({ isActive }) =>
-          isActive ? 'bg-black md:bg-inherit md:border-b-2 md:border-b-green-700' : ''
+          isActive ? 'bg-black md:bg-inherit  flex justify-center items-center ' : ''
         }
       >
         Home
@@ -24,7 +37,7 @@ function Navbar() {
         to="/mycart"
         className={`md:flex md:justify-center md:items-center md:gap-1 ${
           ({ isActive }) =>
-            isActive ? 'bg-black md:bg-inherit md:border-b-2 md:border-b-green-700' : ''
+            isActive ? 'bg-black md:bg-inherit ' : ''
         }`}
       >
         <FaCartShopping className='text-green-700'/> MyCart
@@ -33,11 +46,16 @@ function Navbar() {
         to="/addproduct"
         className={`md:flex md:justify-center md:items-center md:gap-1 ${
           ({ isActive }) =>
-            isActive ? 'bg-black md:bg-inherit md:border-b-2 md:border-b-green-700' : ''
+            isActive ? 'bg-black md:bg-inherit ' : ''
         }`}
       >
         <FaProductHunt className='text-green-700'/> Addproduct
       </NavLink>
+      <li>
+          <button className='btn bg-green-700 text-white' onClick={toggleDarkMode}>
+            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+          </button>
+        </li>
     </>
   );
 
@@ -50,10 +68,10 @@ function Navbar() {
   };
 
   return (
-    <nav className="w-full bg-green-200 border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+    <nav className="w-full bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 px-2 py-4 ">
       <div className=" md:flex flex-wrap items-center justify-between ">
         <a href="#" className="flex items-center">
-          <img src="/public/sitelogo.png" className="h-8 mr-3" alt="Flowbite Logo" />
+          <img src="https://i.ibb.co/6sjFkvB/Untitled-logo-1-free-file.jpg" className="h-8 mr-3" alt="Flowbite Logo" />
         </a>
         <button
           onClick={toggleMobileNav}
@@ -83,6 +101,7 @@ function Navbar() {
           </button>
           <ul className="flex shadow-xl mt-0 text-white flex-col font-medium p-4 md:p-0 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {navitems()}
+         
           </ul>
         </div>
         <div className={`w-full hidden md:block text-black md:w-auto`} id="navbar-dropdown">

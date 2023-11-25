@@ -39,13 +39,13 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-cover bg-no-repeat" style={{ backgroundImage: `url('https://i.ibb.co/hWkKpLd/Untitled-design.jpg')` }}>
+    <div className="flex h-screen  items-center justify-center bg-cover bg-no-repeat" style={{ backgroundImage: `url('https://i.ibb.co/hWkKpLd/Untitled-design.jpg')` }}>
       <div className="rounded-xl  px-4 py-4 sm:px-8 md:px-16 lg:px-32 sm:py-6 md:py-8 lg:py-10 shadow-lg max-w-md">
         <div className="text-white">
           <div className="mb-4 flex flex-col items-center">
             <img src="/public/sitelogo.png" width="150" alt="" />
             <h1 className="my-2 text-2xl">Gadgetbd</h1>
-            <span className="text-white">Enter Register Details</span>
+            <span className="text-white">Enter Login Details</span>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">

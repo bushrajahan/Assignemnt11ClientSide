@@ -1,19 +1,29 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import swal from "sweetalert";
+import { useLoaderData, useParams } from "react-router-dom";
 
-const AddProduct = () => {
+const Update = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
+  const id = useParams();
+  const [singleData, setSingleData] = useState([]);
+  useEffect(() => {
+    fetch(
+      `https://assignment-server-side10-3vbvizkrt-bushrajahans-projects.vercel.app/users/${id.brandName}/${id.id}`
+    )
+      .then((res) => res.json())
+      .then((data) => setSingleData(data));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const img = form.image.value;
-    const name = form.name.value.toLowerCase();
-    const brandName = form.brandName.value.toLowerCase();
-    const productType = form.productType.value.toLowerCase();
-    const description = form.shortDescription.value.toLowerCase();
+    const name = form.name.value;
+    const brandName = form.brandName.value;
+    const productType = form.productType.value;
+    const description = form.shortDescription.value;
     const price = form.price.value;
     const rating = form.rating.value;
     const total = {
@@ -28,10 +38,11 @@ const AddProduct = () => {
     };
 
     // Define the URL where you want to send the POST request
+
     fetch(
-      "https://assignment-server-side10-3vbvizkrt-bushrajahans-projects.vercel.app/users",
+      `https://assignment-server-side10-3vbvizkrt-bushrajahans-projects.vercel.app/users/${id.brandName}/${id.id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -46,7 +57,7 @@ const AddProduct = () => {
         // Show a success message to the user
         swal({
           title: "Good job!",
-          text: "You added the product!",
+          text: "You Update  the product!",
           icon: "success",
           button: "Aww yiss!",
         });
@@ -69,7 +80,7 @@ const AddProduct = () => {
     <div>
       <section className="max-w-4xl p-6 mx-auto bg-green-400 rounded-md shadow-md dark:bg-gray-800 mt-20">
         <h1 className="text-xl font-bold text-white capitalize dark:text-white">
-          Add Product
+          Update
         </h1>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
@@ -85,6 +96,7 @@ const AddProduct = () => {
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 name="image"
+                defaultValue={singleData?.img}
                 required
               />
             </div>
@@ -101,6 +113,7 @@ const AddProduct = () => {
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 name="name"
+                defaultValue={singleData?.name}
                 required
               />
             </div>
@@ -117,6 +130,7 @@ const AddProduct = () => {
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 name="brandName"
+                defaultValue={singleData?.brandName}
                 required
               />
             </div>
@@ -133,6 +147,7 @@ const AddProduct = () => {
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 name="productType"
+                defaultValue={singleData?.productType}
                 required
               />
             </div>
@@ -149,6 +164,7 @@ const AddProduct = () => {
                 type="number"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 name="price"
+                defaultValue={singleData?.price}
                 required
               />
             </div>
@@ -164,6 +180,7 @@ const AddProduct = () => {
                 id="productDescription"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 name="shortDescription"
+                defaultValue={singleData?.description}
                 required
               ></textarea>
             </div>
@@ -182,6 +199,7 @@ const AddProduct = () => {
                 max="5"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 name="rating"
+                defaultValue={singleData?.rating}
                 required
               />
             </div>
@@ -191,7 +209,7 @@ const AddProduct = () => {
             type="submit"
             className="mt-6 px-4 py-2 font-bold text-white bg-green-500 rounded-full hover-bg-green-700 focus:outline-none focus:ring"
           >
-            Add Product
+            update
           </button>
         </form>
       </section>
@@ -199,4 +217,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default Update;

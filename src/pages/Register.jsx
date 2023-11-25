@@ -19,40 +19,48 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const img = form.photo.value;
-    console.log(img)
-    const password = form.password.value;
+    const {register , handleUpdateProfile} = useContext(AuthContext)
+    console.log(register, handleUpdateProfile)
+    const navigate = useNavigate()
+ 
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.name.value;
+      const email = form.email.value;
+      const img = form.photo.value;
+      console.log(img)
+      const password = form.password.value;
+  
+      const pattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>?]).{6,}$/;
+  
+      if (pattern.test(password)) {
+        register(email, password)
+        .then(async(res) => {
+  
+          const user = res.user;
+          console.log(user)
+          await handleUpdateProfile(user,{
+            displayName:name,
+             photoURL:img
 
-    const pattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>?]).{6,}$/;
-
-    if (pattern.test(password)) {
-      register(email, password)
-      .then(async(res) => {
-
-        const user = res.user;
-        console.log(user)
-        await updateProfile(user,{
-          displayName:name,
-          photoURL:photos
-        })
           
-            toast.success('Congratess!! Welcome to shopping')
+          })
             
-            
-        })
-        .catch((error) => {console.error(error)
-           if(error.code === 'auth/email-already-in-use'){
-            toast.error('Email already is used ')
-           }
-        });
-    } else {
-      toast.error('Password must contain at least one uppercase letter, one special character, and be a minimum of 6 characters in length');
-    }
-  };
+              toast.success('Congratess!! Welcome to shopping')
+              
+              
+          })
+          .catch((error) => {console.error(error)
+             if(error.code === 'auth/email-already-in-use'){
+              toast.error('Email already is used ')
+             }
+          });
+      } else {
+        toast.error('Password must contain at least one uppercase letter, one special character, and be a minimum of 6 characters in length');
+      }
+    };
+
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-cover mt-20 bg-no-repeat" style={{ backgroundImage: `url('https://i.ibb.co/hWkKpLd/Untitled-design.jpg')` }}>
